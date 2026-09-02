@@ -1,0 +1,332 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0f0f0f;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Games Section */
+.games-section {
+  position: relative;
+  z-index: 1;
+  padding: 0 24px 120px;
+  margin-top: -150px;
+  text-align: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #f0f0f0;
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease-out;
+}
+
+.section-title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.games-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .games-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.game-card {
+  width: 320px;
+  flex: 0 0 320px;
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.game-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.game-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(67, 173, 106, 0.5);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.game-image {
+  position: relative;
+  height: 180px;
+  background: rgba(255, 255, 255, 0.03);
+  overflow: hidden;
+}
+
+.game-image::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+  z-index: 1;
+}
+
+.game-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.game-card:hover .game-image img {
+  transform: scale(1.05);
+}
+
+.status-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  background: #43ad6a;
+  color: #000;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.game-info {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #e1e1e1;
+}
+
+.game-tags {
+  display: flex;
+  gap: 6px;
+}
+
+.game-tag {
+  font-size: 0.75rem;
+  color: #adb5bd;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4px 10px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+#snow-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.center {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* Title */
+.title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: transparent;
+  background-size: 400% 400%;
+  background-image: linear-gradient(-45deg, #5abf7f, #358853, #5abf7f, #3d9e61, #358853, #3d9e61, #5abf7f, #358853);
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: title-gradient 5s ease infinite, titleReveal 0.8s ease-out both;
+  pointer-events: none;
+  user-select: none;
+  position: relative;
+}
+
+.title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 4.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: transparent;
+  background-size: 400% 400%;
+  background-image: linear-gradient(-45deg, #5abf7f, #358853, #5abf7f, #3d9e61, #358853, #3d9e61, #5abf7f, #358853);
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: title-gradient 5s ease infinite;
+  filter: blur(30px);
+  opacity: 0.5;
+  z-index: -1;
+}
+
+@keyframes titleReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+/* Tagline */
+.tagline {
+  margin-top: 12px;
+  font-size: 1.2rem;
+  color: #a0a0a0;
+  pointer-events: none;
+  user-select: none;
+  animation: taglineIn 0.6s ease-out 0.4s both;
+}
+
+.rotating-text {
+  color: #43ad6a;
+  font-weight: 600;
+  border-right: 2px solid #43ad6a;
+  padding-right: 4px;
+  animation: blink 0.8s step-end infinite;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+@keyframes taglineIn {
+  0% {
+    opacity: 0;
+    transform: translateY(15px);
+    filter: blur(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+/* Buttons */
+.buttons {
+  margin-top: 28px;
+  display: flex;
+  gap: 16px;
+  animation: buttonsIn 0.6s ease-out 0.6s both;
+}
+
+@keyframes buttonsIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.btn {
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  transition: left 0.5s ease;
+}
+
+.btn:hover::before {
+  left: 100%;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+}
+
+.btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.btn-primary {
+  background: #43ad6a;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(67, 173, 106, 0.2);
+}
+
+.btn-primary:hover {
+  background: #61c284;
+  box-shadow: 0 8px 25px rgba(67, 173, 106, 0.4);
+}
+
+.btn-secondary {
+  background: #212529;
+  border: 1px solid #343a40;
+  color: #e1e1e1;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary:hover {
+  background: #343a40;
+  border-color: #495057;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes title-gradient {
+  0% { background-position: 0; }
+  50% { background-position: 100%; }
+  100% { background-position: 0; }
+}
